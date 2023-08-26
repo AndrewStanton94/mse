@@ -1,28 +1,31 @@
 {
-  "name": "mse",
-  "version": "1.0.0",
-  "description": "A bookmarklet to filter results on the MoneySavingExpert Savings Accounts page",
-  "main": "index.js",
-  "scripts": {
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AndrewStanton94/mse.git"
-  },
-  "keywords": [
-    "mse",
-    "bookmarklet",
-    "TDD",
-    "js"
-  ],
-  "author": "Andrew Stanton",
-  "license": "GPL-3.0-only",
-  "bugs": {
-    "url": "https://github.com/AndrewStanton94/mse/issues"
-  },
-  "homepage": "https://github.com/AndrewStanton94/mse#readme",
-  "devDependencies": {
-    "jest": "^29.6.4"
-  }
+	"name": "mse",
+	"version": "1.0.0",
+	"description": "A bookmarklet to filter results on the MoneySavingExpert Savings Accounts page",
+	"main": "index.js",
+	"scripts": {
+		"test": "jest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/AndrewStanton94/mse.git"
+	},
+	"keywords": [
+		"mse",
+		"bookmarklet",
+		"TDD",
+		"js"
+	],
+	"author": "Andrew Stanton",
+	"license": "GPL-3.0-only",
+	"bugs": {
+		"url": "https://github.com/AndrewStanton94/mse/issues"
+	},
+	"homepage": "https://github.com/AndrewStanton94/mse#readme",
+	"devDependencies": {
+		"eslint": "^8.48.0",
+		"eslint-config-prettier": "^9.0.0",
+		"jest": "^29.6.4",
+		"prettier": "3.0.2"
+	}
 }
