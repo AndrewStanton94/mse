@@ -4,9 +4,22 @@
 		"commonjs": true,
 		"es2021": true
 	},
-	"extends": ["eslint:recommended", "prettier"],
+	"plugins": ["jest"],
+	"extends": [
+		"eslint:recommended",
+		"plugin:jest/recommended",
+		"plugin:jest/style",
+		"prettier"
+	],
 	"parserOptions": {
 		"ecmaVersion": "latest"
 	},
-	"rules": {}
+	"rules": {
+		"jest/prefer-equality-matcher": "warn",
+		"jest/prefer-comparison-matcher": "warn",
+		"jest/prefer-hooks-in-order": "warn",
+		"jest/prefer-hooks-on-top": "warn",
+		"jest/prefer-each": "warn",
+		"jest/no-conditional-in-test": "error"
+	}
 }
