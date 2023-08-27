@@ -1,4 +1,5 @@
 const { JSDOM } = require('jsdom');
+const extractors = require('./extractors');
 
 // Rate has conditions
 // Interest paid annually
@@ -11,28 +12,31 @@ const rawHTML1 = `<tr >
 	<td>£1/ £250,000</td>
 	<td>Phone/ post/ branch</td>
 </tr>`;
-const rawHTML1PostProcessing = `<tr
+const inputDOM1 = new JSDOM(`<table>${rawHTML1}</table>`);
+const expectedHTML1 = `<tr
 	data-rate="5"
-	<p><em>(max three withdrawals a year)</em></p>
+	data-rate-qualifier="(max three withdrawals a year)"
 	data-interest-payment-frequency="[annually]"
 	data-min-deposit="1"
 	data-max-deposit="250_000"
 	data-how-to-open="[phone, post, branch]"
 >
 </tr>`;
+const expectedDOM1 = JSDOM.fragment(`${expectedHTML1}`);
 
 // Rate has no conditions
 // Multiple interest rate payment frequencies
 // Postfix used on deposit limit
 // Single "How to open" value
 const rawHTML2 = `<tr >
-	<td><strong><a  href="https://www.cahoot.com/products-and-services/cahoot-simple-saver" target="_blank">Cahoot</a></strong></td>
+	<td><strong><a href="https://www.cahoot.com/products-and-services/cahoot-simple-saver" target="_blank">Cahoot</a></strong></td>
 	<td><strong>4.9%</strong></td>
 	<td>Monthly or annually</td>
 	<td>£1/ £2m</td>
 	<td>Online</td>
 </tr>`;
-const rawHTML2PostProcessing = `<tr
+const inputDOM2 = new JSDOM(`<table>${rawHTML2}</table>`);
+const expectedHTML2 = `<tr
 	data-rate="4.9"
 	data-interest-payment-frequency="[monthly, annually]"
 	data-min-deposit="1"
@@ -40,9 +44,7 @@ const rawHTML2PostProcessing = `<tr
 	data-how-to-open="[online]"
 >
 </tr>`;
-const dom2 = new JSDOM(rawHTML2PostProcessing);
-console.log(dom2.window.document);
-console.log(dom2.window.document.querySelector('tr'));
+const expectedDOM2 = JSDOM.fragment(`${expectedHTML2}`);
 
 test('JSDOM works', () => {
 	const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
@@ -51,9 +53,38 @@ test('JSDOM works', () => {
 });
 
 describe('Interest rate', () => {
-	test.todo('Should extract the interest rate');
-	test.todo('Should extract the interest rate as a decimal');
-	test.todo('Should extract qualifying text into a separate field');
+	test('Should set the interest rate', () => {
+		const relevantRow = inputDOM2.window.document.querySelector('tr');
+		const actual = extractors.rate(relevantRow);
+		expect(actual?.dataset?.rate).toBeDefined();
+	});
+
+	test('Should extract the decimal interest rate', () => {
+		const relevantRow = inputDOM2.window.document.querySelector('tr');
+		const actual = extractors.rate(relevantRow);
+		const {
+			dataset: { rate },
+		} = expectedDOM2.firstChild;
+		expect(actual.dataset.rate).toBe(rate);
+	});
+
+	test('Should extract the integer interest rate', () => {
+		const relevantRow = inputDOM1.window.document.querySelector('tr');
+		const actual = extractors.rate(relevantRow);
+		const {
+			dataset: { rate },
+		} = expectedDOM1.firstChild;
+		expect(actual.dataset.rate).toBe(rate);
+	});
+
+	test('Should extract qualifying text into a separate field', () => {
+		const relevantRow = inputDOM1.window.document.querySelector('tr');
+		const actual = extractors.rate(relevantRow);
+		const {
+			dataset: { rateQualifier },
+		} = expectedDOM1.firstChild;
+		expect(actual.dataset.rateQualifier).toBe(rateQualifier);
+	});
 });
 
 describe('Notice period', () => {
