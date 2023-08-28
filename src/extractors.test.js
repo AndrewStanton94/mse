@@ -93,18 +93,91 @@ describe('Notice period', () => {
 });
 
 describe('Interest payment frequency', () => {
-	test.todo('Should extract how often I would receive interest payment');
-	test.todo('Should support multiple payment frequencies');
+	test('Should extract how often I would receive interest payment', () => {
+		const relevantRow = inputDOM2.window.document.querySelector('tr');
+		const actual = extractors.paymentFrequency(relevantRow);
+		expect(actual?.dataset?.interestPaymentFrequency).toBeDefined();
+	});
+
+	test('Should support a single payment frequency', () => {
+		const relevantRow = inputDOM1.window.document.querySelector('tr');
+		const actual = extractors.paymentFrequency(relevantRow);
+		const {
+			dataset: { interestPaymentFrequency },
+		} = expectedDOM1.firstChild;
+		expect(actual.dataset.interestPaymentFrequency).toBe(
+			interestPaymentFrequency,
+		);
+	});
+
+	test('Should support multiple payment frequencies', () => {
+		const relevantRow = inputDOM2.window.document.querySelector('tr');
+		const actual = extractors.paymentFrequency(relevantRow);
+		const {
+			dataset: { interestPaymentFrequency },
+		} = expectedDOM2.firstChild;
+		expect(actual.dataset.interestPaymentFrequency).toBe(
+			interestPaymentFrequency,
+		);
+	});
+
+	test('Should save payment frequencies in lowercase', () => {
+		const relevantRow = inputDOM2.window.document.querySelector('tr');
+		const actual = extractors.paymentFrequency(relevantRow);
+		expect(actual.dataset.interestPaymentFrequency).toMatch(/[a-z[\] ]/);
+	});
 });
 
-describe('Deposit limits', () => {
-	test.todo('Should extract the Minimum deposit');
-	test.todo('Should support numbers with comas in them');
-	test.todo('Should support numbers with the m abbreviation in them');
+describe.skip('Deposit limits', () => {
+	test('Should extract the Minimum deposit', () => {
+		const relevantRow = inputDOM1.window.document.querySelector('tr');
+		const actual = extractors.deposits(relevantRow);
+		expect(actual?.dataset?.minDeposit).toBeDefined();
+
+		const {
+			dataset: { minDeposit },
+		} = expectedDOM1.firstChild;
+		expect(actual.dataset.interestPaymentFrequency).toBe(minDeposit);
+	});
+
+	test('Should extract the Maximum deposit', () => {
+		const relevantRow = inputDOM1.window.document.querySelector('tr');
+		const actual = extractors.deposits(relevantRow);
+		expect(actual?.dataset?.maxDeposit).toBeDefined();
+	});
+
+	test('Should support numbers with comas in them', () => {
+		const relevantRow = inputDOM1.window.document.querySelector('tr');
+		const actual = extractors.deposits(relevantRow);
+		const {
+			dataset: { maxDeposit },
+		} = expectedDOM1.firstChild;
+		expect(actual.dataset.interestPaymentFrequency).toBe(maxDeposit);
+	});
+
+	test('Should support numbers with the m abbreviation in them', () => {
+		const relevantRow = inputDOM2.window.document.querySelector('tr');
+		const actual = extractors.deposits(relevantRow);
+		const {
+			dataset: { maxDeposit },
+		} = expectedDOM2.firstChild;
+		expect(actual.dataset.interestPaymentFrequency).toBe(maxDeposit);
+	});
 });
 
-describe('How to open', () => {
-	test.todo('Should extract the "How to open" options as an array');
-	test.todo('Should lowercase each way to open');
-	test.todo('Should flag "no joint" accounts');
+describe.skip('How to open', () => {
+	test('Should extract the "How to open" options as an array', () => {
+		const relevantRow = inputDOM1.window.document.querySelector('tr');
+		const actual = extractors.howToOpen(relevantRow);
+		const {
+			dataset: { howToOpen },
+		} = expectedDOM1.firstChild;
+		expect(actual.dataset.howToOpen).toBe(howToOpen);
+	});
+	test('Should lowercase each "How to open" option', () => {
+		const relevantRow = inputDOM1.window.document.querySelector('tr');
+		const actual = extractors.howToOpen(relevantRow);
+		expect(actual.dataset.howToOpen).toMatch(/[a-z[\] ]/);
+	});
+	test.skip('Should flag "no joint" accounts', () => {});
 });
