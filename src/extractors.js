@@ -16,6 +16,24 @@ const rate = (inputRow) => {
 	return inputRow;
 };
 
+/**
+ *
+ * @param {HTMLTableRowElement} inputRow
+ */
+const paymentFrequency = (inputRow) => {
+	const textContent = inputRow
+		.querySelectorAll('td')[2]
+		.textContent.toLowerCase();
+
+	const arrayOutput = textContent
+		.split(/or|,/)
+		.map((frequency) => frequency.trim());
+	const jsonOut = JSON.stringify(arrayOutput);
+	inputRow.dataset.interestPaymentFrequency = jsonOut;
+	return inputRow;
+};
+
 module.exports = {
 	rate,
+	paymentFrequency,
 };
