@@ -128,7 +128,7 @@ describe('Interest payment frequency', () => {
 	});
 });
 
-describe.skip('Deposit limits', () => {
+describe('Deposit limits', () => {
 	test('Should extract the Minimum deposit', () => {
 		const relevantRow = inputDOM1.window.document.querySelector('tr');
 		const actual = extractors.deposits(relevantRow);

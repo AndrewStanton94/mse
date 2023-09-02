@@ -1,3 +1,5 @@
+const { consistentDeposit } = require('./utils');
+
 const percentageRegex = /\d+(\.\d)?%/;
 
 /**
@@ -33,7 +35,23 @@ const paymentFrequency = (inputRow) => {
 	return inputRow;
 };
 
+/**
+ *
+ * @param {HTMLTableRowElement} inputRow
+ */
+const deposits = (inputRow) => {
+	const textContent = [...inputRow.querySelectorAll('td')]
+		.at(-2)
+		.textContent.toLowerCase();
+	const [minD, maxD] = textContent.split('/');
+
+	inputRow.dataset.minDeposit = consistentDeposit(minD);
+	inputRow.dataset.maxDeposit = consistentDeposit(maxD);
+	return inputRow;
+};
+
 module.exports = {
 	rate,
 	paymentFrequency,
+	deposits,
 };
