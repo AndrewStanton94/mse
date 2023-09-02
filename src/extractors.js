@@ -1,4 +1,4 @@
-const { consistentDeposit } = require('./utils');
+const { consistentDeposit, consistentArray } = require('./utils');
 
 const percentageRegex = /\d+(\.\d)?%/;
 
@@ -23,13 +23,9 @@ const rate = (inputRow) => {
  * @param {HTMLTableRowElement} inputRow
  */
 const paymentFrequency = (inputRow) => {
-	const textContent = inputRow
-		.querySelectorAll('td')[2]
-		.textContent.toLowerCase();
+	const { textContent } = inputRow.querySelectorAll('td')[2];
 
-	const arrayOutput = textContent
-		.split(/or|,/)
-		.map((frequency) => frequency.trim());
+	const arrayOutput = consistentArray(textContent, /or|,/);
 	const jsonOut = JSON.stringify(arrayOutput);
 	inputRow.dataset.interestPaymentFrequency = jsonOut;
 	return inputRow;
@@ -40,10 +36,8 @@ const paymentFrequency = (inputRow) => {
  * @param {HTMLTableRowElement} inputRow
  */
 const deposits = (inputRow) => {
-	const textContent = [...inputRow.querySelectorAll('td')]
-		.at(-2)
-		.textContent.toLowerCase();
-	const [minD, maxD] = textContent.split('/');
+	const { textContent } = [...inputRow.querySelectorAll('td')].at(-2);
+	const [minD, maxD] = consistentArray(textContent, '/');
 
 	inputRow.dataset.minDeposit = consistentDeposit(minD);
 	inputRow.dataset.maxDeposit = consistentDeposit(maxD);
@@ -55,13 +49,9 @@ const deposits = (inputRow) => {
  * @param {HTMLTableRowElement} inputRow
  */
 const howToOpen = (inputRow) => {
-	const textContent = [...inputRow.querySelectorAll('td')]
-		.at(-1)
-		.textContent.toLowerCase();
+	const { textContent } = [...inputRow.querySelectorAll('td')].at(-1);
 
-	const arrayOutput = textContent
-		.split('/')
-		.map((frequency) => frequency.trim());
+	const arrayOutput = consistentArray(textContent, '/');
 	const jsonOut = JSON.stringify(arrayOutput);
 	inputRow.dataset.howToOpen = jsonOut;
 
