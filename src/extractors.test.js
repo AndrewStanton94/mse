@@ -137,7 +137,7 @@ describe.skip('Deposit limits', () => {
 		const {
 			dataset: { minDeposit },
 		} = expectedDOM1.firstChild;
-		expect(actual.dataset.interestPaymentFrequency).toBe(minDeposit);
+		expect(actual.dataset.minDeposit).toBe(minDeposit);
 	});
 
 	test('Should extract the Maximum deposit', () => {
@@ -152,7 +152,7 @@ describe.skip('Deposit limits', () => {
 		const {
 			dataset: { maxDeposit },
 		} = expectedDOM1.firstChild;
-		expect(actual.dataset.interestPaymentFrequency).toBe(maxDeposit);
+		expect(actual.dataset.maxDeposit).toBe(maxDeposit);
 	});
 
 	test('Should support numbers with the m abbreviation in them', () => {
@@ -161,7 +161,7 @@ describe.skip('Deposit limits', () => {
 		const {
 			dataset: { maxDeposit },
 		} = expectedDOM2.firstChild;
-		expect(actual.dataset.interestPaymentFrequency).toBe(maxDeposit);
+		expect(actual.dataset.maxDeposit).toBe(maxDeposit);
 	});
 });
 
