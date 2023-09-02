@@ -46,6 +46,43 @@ const expectedHTML2 = `<tr
 </tr>`;
 const expectedDOM2 = JSDOM.fragment(`${expectedHTML2}`);
 
+const rawHTMLNotice = `<tr>
+	<td rowspan="2"><strong><a href="https://www.oxbury.com/savings">Oxbury Bank</a></strong></td>
+	<td><strong>5.59%</strong></td>
+	<td>180 days</td>
+	<td rowspan="2">Monthly</td>
+	<td rowspan="2">£1,000/ £500,000</td>
+	<td rowspan="2"><p>Online</p> <p><em>(account management via app only, no joint accounts)</em></p> </td>
+</tr>`;
+const inputDOMNotice = new JSDOM(`<table>${rawHTMLNotice}</table>`);
+const expectedHTMLNotice = `<tr
+	data-rate="5.59"
+	data-interest-payment-frequency="[&quot;monthly&quot;]"
+	data-notice="180"
+	data-min-deposit="1_000"
+	data-max-deposit="500_000"
+	data-how-to-open="[&quot;online&quot;]"
+	data-how-to-open-notes="[&quot;account management via app only&quot;,&quot;no joint accounts&quot;]"
+>
+</tr>`;
+const expectedDOMNotice = JSDOM.fragment(`${expectedHTMLNotice}`);
+
+const rawHTMLNotice2 = `<tr class="even">
+	<td class="table-cell-darker-blue"><span class="table-cell-darker-blue"><strong>5.53%</strong></span></td>
+	<td class="table-cell-darker-blue"><span class="table-cell-darker-blue">120 days</span></td>
+</tr>`;
+const inputDOMNotice2 = new JSDOM(`<table>${rawHTMLNotice2}</table>`);
+const expectedHTMLNotice2 = `<tr
+	data-rate="5.53"
+	data-interest-payment-frequency="[&quot;monthly&quot;]"
+	data-notice="120"
+	data-min-deposit="1_000"
+	data-max-deposit="500_000"
+	data-how-to-open="[&quot;online&quot;]"
+>
+</tr>`;
+const expectedDOMNotice2 = JSDOM.fragment(`${expectedHTMLNotice2}`);
+
 test('JSDOM works', () => {
 	const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
 	const { textContent } = dom.window.document.querySelector('p');
