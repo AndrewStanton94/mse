@@ -114,6 +114,15 @@ describe('Interest rate', () => {
 		expect(actual.dataset.rate).toBe(rate);
 	});
 
+	test('Should extract the decimal interest rate for notice accounts', () => {
+		const relevantRow = inputDOMNotice.window.document.querySelector('tr');
+		const actual = extractors.rate(relevantRow);
+		const {
+			dataset: { rate },
+		} = expectedDOMNotice.firstChild;
+		expect(actual.dataset.rate).toBe(rate);
+	});
+
 	test('Should extract qualifying text into a separate field', () => {
 		const relevantRow = inputDOM1.window.document.querySelector('tr');
 		const actual = extractors.rate(relevantRow);
@@ -142,6 +151,17 @@ describe('Interest payment frequency', () => {
 		const {
 			dataset: { interestPaymentFrequency },
 		} = expectedDOM1.firstChild;
+		expect(actual.dataset.interestPaymentFrequency).toBe(
+			interestPaymentFrequency,
+		);
+	});
+
+	test('Should support a single payment frequency for notice accounts', () => {
+		const relevantRow = inputDOMNotice.window.document.querySelector('tr');
+		const actual = extractors.paymentFrequency(relevantRow);
+		const {
+			dataset: { interestPaymentFrequency },
+		} = expectedDOMNotice.firstChild;
 		expect(actual.dataset.interestPaymentFrequency).toBe(
 			interestPaymentFrequency,
 		);
@@ -200,6 +220,16 @@ describe('Deposit limits', () => {
 		} = expectedDOM2.firstChild;
 		expect(actual.dataset.maxDeposit).toBe(maxDeposit);
 	});
+
+	test('Should extract deposit limits for notice accounts', () => {
+		const relevantRow = inputDOMNotice.window.document.querySelector('tr');
+		const actual = extractors.deposits(relevantRow);
+		const {
+			dataset: { minDeposit, maxDeposit },
+		} = expectedDOMNotice.firstChild;
+		expect(actual.dataset.minDeposit).toBe(minDeposit);
+		expect(actual.dataset.maxDeposit).toBe(maxDeposit);
+	});
 });
 
 describe('How to open', () => {
@@ -217,5 +247,15 @@ describe('How to open', () => {
 		const actual = extractors.howToOpen(relevantRow);
 		expect(actual.dataset.howToOpen).toMatch(/[a-z[\] ]/);
 	});
+
 	test.skip('Should flag "no joint" accounts', () => {});
+
+	test('Should extract the "How to open" options for notice accounts', () => {
+		const relevantRow = inputDOMNotice.window.document.querySelector('tr');
+		const actual = extractors.howToOpen(relevantRow);
+		const {
+			dataset: { howToOpen },
+		} = expectedDOMNotice.firstChild;
+		expect(actual.dataset.howToOpen).toBe(howToOpen);
+	});
 });
