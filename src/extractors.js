@@ -1,6 +1,6 @@
 const { consistentDeposit, consistentArray } = require('./utils');
 
-const percentageRegex = /\d+(\.\d)?%/;
+const percentageRegex = /\d+(\.\d{1,2})?%/;
 
 /**
  *
