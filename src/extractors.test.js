@@ -19,7 +19,7 @@ const expectedHTML1 = `<tr
 	data-interest-payment-frequency="[&quot;annually&quot;]"
 	data-min-deposit="1"
 	data-max-deposit="250_000"
-	data-how-to-open="[phone, post, branch]"
+	data-how-to-open="[&quot;phone&quot;,&quot;post&quot;,&quot;branch&quot;]"
 >
 </tr>`;
 const expectedDOM1 = JSDOM.fragment(`${expectedHTML1}`);
@@ -41,7 +41,7 @@ const expectedHTML2 = `<tr
 	data-interest-payment-frequency="[&quot;monthly&quot;,&quot;annually&quot;]"
 	data-min-deposit="1"
 	data-max-deposit="2_000_000"
-	data-how-to-open="[online]"
+	data-how-to-open="[&quot;online&quot;]"
 >
 </tr>`;
 const expectedDOM2 = JSDOM.fragment(`${expectedHTML2}`);
