@@ -23,7 +23,7 @@ const rate = (inputRow) => {
  * @param {HTMLTableRowElement} inputRow
  */
 const paymentFrequency = (inputRow) => {
-	const { textContent } = inputRow.querySelectorAll('td')[2];
+	const { textContent } = [...inputRow.querySelectorAll('td')].at(-3);
 
 	const arrayOutput = consistentArray(textContent, /or|,/);
 	const jsonOut = JSON.stringify(arrayOutput);
