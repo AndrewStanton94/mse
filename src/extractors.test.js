@@ -165,7 +165,7 @@ describe('Deposit limits', () => {
 	});
 });
 
-describe.skip('How to open', () => {
+describe('How to open', () => {
 	test('Should extract the "How to open" options as an array', () => {
 		const relevantRow = inputDOM1.window.document.querySelector('tr');
 		const actual = extractors.howToOpen(relevantRow);
@@ -174,6 +174,7 @@ describe.skip('How to open', () => {
 		} = expectedDOM1.firstChild;
 		expect(actual.dataset.howToOpen).toBe(howToOpen);
 	});
+
 	test('Should lowercase each "How to open" option', () => {
 		const relevantRow = inputDOM1.window.document.querySelector('tr');
 		const actual = extractors.howToOpen(relevantRow);

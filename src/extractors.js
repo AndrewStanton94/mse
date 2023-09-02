@@ -50,8 +50,27 @@ const deposits = (inputRow) => {
 	return inputRow;
 };
 
+/**
+ *
+ * @param {HTMLTableRowElement} inputRow
+ */
+const howToOpen = (inputRow) => {
+	const textContent = [...inputRow.querySelectorAll('td')]
+		.at(-1)
+		.textContent.toLowerCase();
+
+	const arrayOutput = textContent
+		.split('/')
+		.map((frequency) => frequency.trim());
+	const jsonOut = JSON.stringify(arrayOutput);
+	inputRow.dataset.howToOpen = jsonOut;
+
+	return inputRow;
+};
+
 module.exports = {
 	rate,
 	paymentFrequency,
 	deposits,
+	howToOpen,
 };
