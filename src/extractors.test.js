@@ -248,8 +248,6 @@ describe('How to open', () => {
 		expect(actual.dataset.howToOpen).toMatch(/[a-z[\] ]/);
 	});
 
-	test.skip('Should flag "no joint" accounts', () => {});
-
 	test('Should extract the "How to open" options for notice accounts', () => {
 		const relevantRow = inputDOMNotice.window.document.querySelector('tr');
 		const actual = extractors.howToOpen(relevantRow);
@@ -257,5 +255,19 @@ describe('How to open', () => {
 			dataset: { howToOpen },
 		} = expectedDOMNotice.firstChild;
 		expect(actual.dataset.howToOpen).toBe(howToOpen);
+	});
+
+	describe('How to open notes', () => {
+		test('Should extract the "How to open" notes', () => {
+			const relevantRow =
+				inputDOMNotice.window.document.querySelector('tr');
+			const actual = extractors.howToOpen(relevantRow);
+			const {
+				dataset: { howToOpenNotes },
+			} = expectedDOMNotice.firstChild;
+			expect(actual.dataset.howToOpenNotes).toBe(howToOpenNotes);
+		});
+
+		test.skip('Should flag "no joint" accounts', () => {});
 	});
 });
