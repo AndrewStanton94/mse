@@ -51,9 +51,18 @@ const deposits = (inputRow) => {
 const howToOpen = (inputRow) => {
 	const { textContent } = [...inputRow.querySelectorAll('td')].at(-1);
 
-	const arrayOutput = consistentArray(textContent, '/');
-	const jsonOut = JSON.stringify(arrayOutput);
-	inputRow.dataset.howToOpen = jsonOut;
+	const [waysToOpen, openingNotes] = textContent.split(/[()]/);
+	console.log('openingNotes: ', openingNotes);
+
+	const waysToOpenArray = consistentArray(waysToOpen, '/');
+	const waysToOpenJSON = JSON.stringify(waysToOpenArray);
+	inputRow.dataset.howToOpen = waysToOpenJSON;
+
+	if (openingNotes) {
+		const waysToOpenNotesArray = consistentArray(openingNotes, ',');
+		const waysToOpenNotesJSON = JSON.stringify(waysToOpenNotesArray);
+		inputRow.dataset.howToOpenNotes = waysToOpenNotesJSON;
+	}
 
 	return inputRow;
 };
