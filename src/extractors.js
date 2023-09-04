@@ -67,9 +67,25 @@ const howToOpen = (inputRow) => {
 	return inputRow;
 };
 
+/**
+ *
+ * @param {HTMLTableRowElement} inputRow
+ * @returns {HTMLTableRowElement}
+ */
+const noticePeriod = (inputRow) => {
+	const cells = [...inputRow.querySelectorAll('td')];
+	if (cells.length === 6) {
+		const { textContent } = cells[2];
+		const days = parseInt(textContent);
+		inputRow.dataset.notice = days;
+	}
+	return inputRow;
+};
+
 module.exports = {
 	rate,
 	paymentFrequency,
 	deposits,
 	howToOpen,
+	noticePeriod,
 };
