@@ -134,8 +134,22 @@ describe('Interest rate', () => {
 });
 
 describe('Notice period', () => {
-	test.todo('Should extract the notice period when it exists');
-	test.todo('Should support accounts without notice periods');
+	test('Should extract the notice period when it exists', () => {
+		const relevantRow = inputDOMNotice.window.document.querySelector('tr');
+		const actual = extractors.noticePeriod(relevantRow);
+		const {
+			dataset: { notice },
+		} = expectedDOMNotice.firstChild;
+		expect(actual.dataset.notice).toBe(
+			notice,
+		);
+	});
+	test('Should support accounts without notice periods', () => {
+		const relevantRow = inputDOM1.window.document.querySelector('tr');
+		const actual = extractors.noticePeriod(relevantRow);
+		expect(actual.dataset.notice).toBeUndefined();
+
+	});
 });
 
 describe('Interest payment frequency', () => {
