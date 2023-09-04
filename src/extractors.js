@@ -1,10 +1,15 @@
 const { consistentDeposit, consistentArray } = require('./utils');
 
+/**
+ * Match a percentage with 0..2 decimal places
+ */
 const percentageRegex = /\d+(\.\d{1,2})?%/;
 
 /**
+ * Extract the interest rate and save it to the row as a data value
  *
  * @param {HTMLTableRowElement} inputRow
+ * @returns {HTMLTableRowElement}
  */
 const rate = (inputRow) => {
 	// Info in the second column
@@ -19,8 +24,10 @@ const rate = (inputRow) => {
 };
 
 /**
+ * Extract the interest payment frequency and save it to the row as a data value
  *
  * @param {HTMLTableRowElement} inputRow
+ * @returns {HTMLTableRowElement}
  */
 const paymentFrequency = (inputRow) => {
 	const { textContent } = [...inputRow.querySelectorAll('td')].at(-3);
@@ -32,8 +39,10 @@ const paymentFrequency = (inputRow) => {
 };
 
 /**
+ * Extract the minimum and maximum deposits save them to the row as a data value
  *
  * @param {HTMLTableRowElement} inputRow
+ * @returns {HTMLTableRowElement}
  */
 const deposits = (inputRow) => {
 	const { textContent } = [...inputRow.querySelectorAll('td')].at(-2);
@@ -45,8 +54,10 @@ const deposits = (inputRow) => {
 };
 
 /**
+ * Extract the ways the account can be created and save it to the row as a data value
  *
  * @param {HTMLTableRowElement} inputRow
+ * @returns {HTMLTableRowElement}
  */
 const howToOpen = (inputRow) => {
 	const { textContent } = [...inputRow.querySelectorAll('td')].at(-1);
@@ -68,6 +79,7 @@ const howToOpen = (inputRow) => {
 };
 
 /**
+ * Extract the required notice period and save it to the row as a data value
  *
  * @param {HTMLTableRowElement} inputRow
  * @returns {HTMLTableRowElement}
